@@ -4,7 +4,8 @@ from tkinter import ttk
 LARGEFONT = ("Verdana", 15)
 SMALLFONT = ("Veredana", 10)
 SELECTED_SHOWS = {}
-SEATS_CHECKBOXES = {}
+SEATS_CHECKBOXES = []
+# SEATS_CHECKBOXES = {}
 SELECTED_SEATS = []
 
 class Bookings(tk.Frame):
@@ -41,6 +42,7 @@ class Bookings(tk.Frame):
             temp.insert(0, key)
             SELECTED_SHOWS[key] = value[-1]
             shows_treeview.insert('', tk.END, values=temp)
+        shows_treeview.grid(row=1, column=0)
 
         # Buttons
         next_btn = ttk.Button(
@@ -67,8 +69,8 @@ class Seats(tk.Frame):
         for key, value in self.AVAILABLE_SEATS.items():
             if value == "available":
                 checked = tk.IntVar()
-                seat_checkbox = ttk.Checkbutton(self, text=key, variable=checked, onvalue=1, offvalue=0)
-                SEATS_CHECKBOXES[key] = checked.get()
+                seat_checkbox = ttk.Checkbutton(self, text=key, variable=checked, onvalue=key, offvalue="")
+                SEATS_CHECKBOXES.append(checked)
                 seat_checkbox.grid(row=i, sticky=tk.W)
                 i += 1
 
@@ -82,9 +84,9 @@ class Seats(tk.Frame):
 
     @staticmethod
     def collect_checked():
-        for key, value in SEATS_CHECKBOXES.items():
-            if value == 1:
-                SELECTED_SEATS.append(key)
+        for value in SEATS_CHECKBOXES:
+            if value.get() != "":
+                SELECTED_SEATS.append(value.get())
 
     @staticmethod
     def collect_shows_price():
