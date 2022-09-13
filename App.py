@@ -1,15 +1,20 @@
 import tkinter as tk
 from tkinter import ttk
-from Login import Login
+from Credentials import Login, Register
 from Dashboard import Dashboard
+<<<<<<< Updated upstream
 from Bookings import Bookings, Seats, Summary
 from Register import Register
+=======
+from Bookings import Bookings, Seats
+from UserBookings import UserBookings
+>>>>>>> Stashed changes
 
 LARGEFONT = ("Verdana", 15)
 SMALLFONT = ("Veredana", 10)
 
 CREDENTIALS = {"beatrice": ["waterfall", "Beatrice Antoniu", "07567890102", "m.beea@yahoo.com"]}
-BOOKINGS = {"username": ["AVAILABLE_SHOWS[key]", "AVAILABLE_SHOWS[price]", ["AVAILABLE_SEATS[key]"]]}
+BOOKINGS = {}
 AVAILABLE_SHOWS = {
     "Stewart Lee's Comedy Vehicle": ["20/12/2022", "8PM", "150", "Sketches by stand-up comedian Stewart Lee and his friends in Newington Green", "£13.5"],
     "The Mary Whitehouse Experience": ["30/10/2022", "9PM", "200", "Topical sketch by David Baddiel, Rob Newman, Steve Punt, and Hugh Dennis.", "£15"]
@@ -27,6 +32,8 @@ AVAILABLE_SEATS = {
     "07G": "occupied",
     }
 
+CURRENT_USER = ""
+
 class Show_Booking_System(tk.Tk):
     def __init__(self, *args, **kwargs):
 
@@ -36,17 +43,21 @@ class Show_Booking_System(tk.Tk):
         self['bg']='#5d8a82'
         self.resizable(False, False)
 
-        container = tk.Frame(self)
-        container.pack(fill="both", expand=True, padx=50, pady=50)
+        self.container = tk.Frame(self)
+        self.container.pack(fill="both", expand=True, padx=50, pady=50)
 
         self.frames = {}
 
+<<<<<<< Updated upstream
         for F in (Main, Login, Dashboard, Register, Bookings, Seats):
   
             frame = F(container, self)
+=======
+        for F in (Main, Login, Dashboard, Register, Bookings, Seats, UserBookings):
+            frame = F(self.container, self)
+>>>>>>> Stashed changes
             self.frames[F] = frame
             frame.grid(row = 0, column = 0, sticky ="nsew")
-  
         self.show_frame("Main")
 
     def show_frame(self, page):
@@ -57,12 +68,18 @@ class Show_Booking_System(tk.Tk):
             frame = self.frames[Login]
             frame.tkraise()
         elif page == "Dashboard":
+            frame = Dashboard(self.container, self)
+            self.frames[Dashboard] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
             frame = self.frames[Dashboard]
             frame.tkraise()
         elif page == "Register":
             frame = self.frames[Register]
             frame.tkraise()
         elif page == "Bookings":
+            frame = Bookings(self.container, self)
+            self.frames[Bookings] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
             frame = self.frames[Bookings]
             frame.tkraise()
         elif page == "Seats":
@@ -70,6 +87,18 @@ class Show_Booking_System(tk.Tk):
             frame.tkraise()
         elif page == "Summary":
             frame = self.frames[Summary]
+            frame.tkraise()
+        elif page == "Seats":
+            frame = Seats(self.container, self)
+            self.frames[Seats] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+            frame = self.frames[Seats]
+            frame.tkraise()
+        elif page == "UserBookings":
+            frame = UserBookings(self.container, self)
+            self.frames[UserBookings] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+            frame = self.frames[UserBookings]
             frame.tkraise()
         else:
             print("Page doesn't exist!")
@@ -85,6 +114,13 @@ class Show_Booking_System(tk.Tk):
 
     def get_seats(self):
         return AVAILABLE_SEATS
+
+    def set_curr_user(self, username):
+        global CURRENT_USER
+        CURRENT_USER = username
+
+    def get_curr_user(self):
+        return CURRENT_USER
 
 
 class Main(tk.Frame):
