@@ -2,13 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from Credentials import Login, Register
 from Dashboard import Dashboard
-<<<<<<< Updated upstream
-from Bookings import Bookings, Seats, Summary
-from Register import Register
-=======
 from Bookings import Bookings, Seats
 from UserBookings import UserBookings
->>>>>>> Stashed changes
 
 LARGEFONT = ("Verdana", 15)
 SMALLFONT = ("Veredana", 10)
@@ -48,14 +43,8 @@ class Show_Booking_System(tk.Tk):
 
         self.frames = {}
 
-<<<<<<< Updated upstream
-        for F in (Main, Login, Dashboard, Register, Bookings, Seats):
-  
-            frame = F(container, self)
-=======
         for F in (Main, Login, Dashboard, Register, Bookings, Seats, UserBookings):
             frame = F(self.container, self)
->>>>>>> Stashed changes
             self.frames[F] = frame
             frame.grid(row = 0, column = 0, sticky ="nsew")
         self.show_frame("Main")
@@ -84,9 +73,6 @@ class Show_Booking_System(tk.Tk):
             frame.tkraise()
         elif page == "Seats":
             frame = self.frames[Seats]
-            frame.tkraise()
-        elif page == "Summary":
-            frame = self.frames[Summary]
             frame.tkraise()
         elif page == "Seats":
             frame = Seats(self.container, self)
