@@ -7,17 +7,9 @@ SMALLFONT = ("Veredana", 10)
 class Login(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.controller = controller
+        self.CREDENTIALS = controller.get_credentials()
 
-        CREDENTIALS = controller.get_credentials()
-
-        # Login Verification
-        def login():
-            for username, password in CREDENTIALS.items():
-                if username == username_entry.get() and password[0] == password_entry.get():
-                    controller.show_frame("Dashboard")
-                    break
-                else:
-                    wrong_input_label.config(text="Login details don't match!")
         # Labels
         username_label = ttk.Label(self, text="Username: ", font=SMALLFONT)
         username_label.grid(column=0, row=1)
@@ -38,5 +30,17 @@ class Login(tk.Frame):
         password_entry.grid(row=2, column=1)
 
         # Buttons
-        login_btn = ttk.Button(self, text="Login", command=login)
+        login_btn = ttk.Button(self, text="Login", command=lambda : self.login(username_input,
+                                                                password_input, wrong_input_label))
         login_btn.grid(row=4, column=0)
+
+    # Login Verification
+    def login(self, username, password, wrong_input_label):
+        for u_name, pwd in self.CREDENTIALS.items():
+            if u_name == username.get() and pwd[0] == password.get():
+                username.set("")
+                password.set("")
+                self.controller.show_frame("Dashboard")
+                break
+            else:
+                wrong_input_label.config(text="Login details don't match!")

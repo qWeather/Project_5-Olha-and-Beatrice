@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from Login import Login
 from Dashboard import Dashboard
-from Bookings import Bookings, Seats, Summary
+from Bookings import Bookings  # , Seats, Summary
 from Register import Register
 
 LARGEFONT = ("Verdana", 15)
@@ -41,7 +41,7 @@ class Show_Booking_System(tk.Tk):
 
         self.frames = {}
 
-        for F in (Main, Login, Dashboard, Register, Bookings, Seats):
+        for F in (Main, Login, Dashboard, Register, Bookings):
   
             frame = F(container, self)
             self.frames[F] = frame
@@ -59,17 +59,11 @@ class Show_Booking_System(tk.Tk):
         elif page == "Dashboard":
             frame = self.frames[Dashboard]
             frame.tkraise()
-        elif page == "Register":
-            frame = self.frames[Register]
-            frame.tkraise()
         elif page == "Bookings":
             frame = self.frames[Bookings]
             frame.tkraise()
-        elif page == "Seats":
-            frame = self.frames[Seats]
-            frame.tkraise()
-        elif page == "Summary":
-            frame = self.frames[Summary]
+        elif page == "Register":
+            frame = self.frames[Register]
             frame.tkraise()
         else:
             print("Page doesn't exist!")
